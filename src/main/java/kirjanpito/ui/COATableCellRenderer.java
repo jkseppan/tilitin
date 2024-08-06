@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -31,7 +32,7 @@ public class COATableCellRenderer extends DefaultTableCellRenderer {
 	private boolean indentEnabled;
 	private boolean highlightFavouriteAccounts;
 	private Color favouriteColor;
-	private BufferedImage favouriteImage;
+	private Image favouriteImage;
 	private boolean imageVisible;
 	private String percentageText;
 	private DecimalFormat formatter;
@@ -45,13 +46,7 @@ public class COATableCellRenderer extends DefaultTableCellRenderer {
 		this.formatter = new DecimalFormat();
 		this.formatter.setMinimumFractionDigits(0);
 		this.formatter.setMaximumFractionDigits(2);
-
-		try {
-			this.favouriteImage = ImageIO.read(Resources.load("favourite-16x16.png"));
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.favouriteImage = Resources.loadAsImage("favourite-16x16.png");
 	}
 
 	/**

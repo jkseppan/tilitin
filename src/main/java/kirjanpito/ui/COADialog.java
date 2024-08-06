@@ -367,7 +367,7 @@ public class COADialog extends JDialog {
 				"Poista", removeListener, true));
 
 		hideNonFavouriteAccountsButton = new JToggleButton(
-				"Vain suosikkitilit", new ImageIcon(Resources.load("favourite-22x22.png")));
+				"Vain suosikkitilit", new ImageIcon(Resources.loadAsImage("favourite-22x22.png")));
 		hideNonFavouriteAccountsButton.addActionListener(hideNonFavAccountsListener);
 		hideNonFavouriteAccountsButton.setSelected(model.isNonFavouriteAccountsHidden());
 

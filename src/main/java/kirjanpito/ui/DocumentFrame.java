@@ -215,14 +215,11 @@ public class DocumentFrame extends JFrame implements AccountSelectionListener {
 			}
 		});
 
-		try {
-			List<Image> images = new ArrayList<Image>(3);
-			images.add(ImageIO.read(Resources.load("tilitin-24x24.png")));
-			images.add(ImageIO.read(Resources.load("tilitin-32x32.png")));
-			images.add(ImageIO.read(Resources.load("tilitin-48x48.png")));
-			setIconImages(images);
-		}
-		catch (IOException e) { }
+		List<Image> images = new ArrayList<Image>(3);
+		images.add(Resources.loadAsImage("tilitin-24x24.png"));
+		images.add(Resources.loadAsImage("tilitin-32x32.png"));
+		images.add(Resources.loadAsImage("tilitin-48x48.png"));
+		setIconImages(images);
 
 		createMenuBar();
 		createToolBar();
@@ -911,7 +908,7 @@ public class DocumentFrame extends JFrame implements AccountSelectionListener {
 		panel.add(textField, c);
 
 		JButton button = new JButton("Etsi", new ImageIcon(
-				Resources.load("find-16x16.png")));
+				Resources.loadAsImage("find-16x16.png")));
 
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -923,7 +920,7 @@ public class DocumentFrame extends JFrame implements AccountSelectionListener {
 		c.fill = GridBagConstraints.BOTH;
 		panel.add(button, c);
 
-		button = new JButton(new ImageIcon(Resources.load("close-16x16.png")));
+		button = new JButton(new ImageIcon(Resources.loadAsImage("close-16x16.png")));
 		button.addActionListener(searchListener);
 		panel.add(button, c);
 	}

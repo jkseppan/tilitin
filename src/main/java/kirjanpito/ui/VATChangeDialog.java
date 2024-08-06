@@ -86,7 +86,7 @@ public class VATChangeDialog extends JDialog implements AccountSelectionListener
 		column = ruleTable.getColumnModel().getColumn(3);
 		column.setPreferredWidth(550);
 
-		addRuleButton = new JButton(new ImageIcon(Resources.load("list-add-16x16.png")));
+		addRuleButton = new JButton(new ImageIcon(Resources.loadAsImage("list-add-16x16.png")));
 		addRuleButton.setToolTipText("Lisää muutos");
 		addRuleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -95,7 +95,7 @@ public class VATChangeDialog extends JDialog implements AccountSelectionListener
 			}
 		});
 
-		removeRuleButton = new JButton(new ImageIcon(Resources.load("list-remove-16x16.png")));
+		removeRuleButton = new JButton(new ImageIcon(Resources.loadAsImage("list-remove-16x16.png")));
 		removeRuleButton.setToolTipText("Poista muutos");
 		removeRuleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

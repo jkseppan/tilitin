@@ -87,7 +87,7 @@ public class SwingUtils {
 		}
 		else {
 			menuItem = new JMenuItem(text,
-					new ImageIcon(Resources.load(imageName)));
+					new ImageIcon(Resources.loadAsImage(imageName)));
 		}
 		
 		menuItem.addActionListener(listener);
@@ -118,7 +118,7 @@ public class SwingUtils {
 		}
 		
 		button.addActionListener(listener);
-		button.setIcon(new ImageIcon(Resources.load(imageName)));
+		button.setIcon(new ImageIcon(Resources.loadAsImage(imageName)));
 		return button;
 	}
 }

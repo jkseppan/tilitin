@@ -37,7 +37,7 @@ public class AboutDialog extends JDialog {
 		
 		GridBagConstraints c = new GridBagConstraints();
 
-		ImageIcon icon = new ImageIcon(Resources.load("tilitin-48x48.png"));
+		ImageIcon icon = new ImageIcon(Resources.loadAsImage("tilitin-48x48.png"));
 		c.anchor = GridBagConstraints.CENTER;
 		c.insets = new Insets(15, 10, 5, 10);
 		c.weightx = 1.0;
@@ -67,7 +67,7 @@ public class AboutDialog extends JDialog {
 		add(label, c);
 		
 		JButton closeButton = new JButton("Sulje",
-				new ImageIcon(Resources.load("close-22x22.png")));
+				new ImageIcon(Resources.loadAsImage("close-22x22.png")));
 		closeButton.setMnemonic('S');
 		closeButton.setPreferredSize(new Dimension(100, 35));
 		closeButton.addActionListener(new ActionListener() {

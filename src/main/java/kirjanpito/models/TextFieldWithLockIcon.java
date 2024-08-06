@@ -3,7 +3,6 @@ package kirjanpito.models;
 import java.awt.Graphics;
 import java.awt.Image;
 
-import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 
 import kirjanpito.ui.resources.Resources;
@@ -15,7 +14,7 @@ public class TextFieldWithLockIcon extends JTextField {
 	private static final long serialVersionUID = 1L;
 
 	public TextFieldWithLockIcon() {
-		lockIcon = new ImageIcon(Resources.load("lock-12x12.png")).getImage();
+		lockIcon = Resources.loadAsImage("lock-12x12.png");
 	}
 
 	public boolean isLockIconVisible() {

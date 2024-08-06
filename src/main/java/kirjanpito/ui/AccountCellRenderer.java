@@ -28,7 +28,7 @@ public class AccountCellRenderer extends DefaultTableCellRenderer {
 	public AccountCellRenderer(Registry registry, TableModel tableModel) {
 		this.registry = registry;
 		this.tableModel = tableModel;
-		icon = new ImageIcon(Resources.load("bullet-12x12.png")).getImage();
+		icon = Resources.loadAsImage("bullet-12x12.png");
 	}
 
 	/**
