@@ -1,2 +1,4 @@
 bin
 dist
+target
+dependency-reduced-pom.xml
