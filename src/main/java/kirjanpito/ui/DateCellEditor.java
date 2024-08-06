@@ -11,6 +11,7 @@ import javax.swing.AbstractCellEditor;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellEditor;
+import javax.swing.text.DefaultCaret;
 
 /**
  * <code>TableCellEditor</code>in toteuttava luokka, jolla
@@ -29,6 +30,7 @@ public class DateCellEditor extends AbstractCellEditor
 	public DateCellEditor() {
 		formatter = new SimpleDateFormat("d.M.yyyy");
 		textField = new DateTextField();
+		textField.setCaret(new DefaultCaret());
 		textField.setBorder(new LineBorder(Color.BLACK));
 	}
 	

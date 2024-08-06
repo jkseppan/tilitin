@@ -34,6 +34,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
+import javax.swing.text.DefaultCaret;
 
 import kirjanpito.db.Account;
 import kirjanpito.models.COATableModel;
@@ -220,6 +221,7 @@ public class AccountStatementOptionsDialog extends PrintOptionsDialog {
 		container.setLayout(layout);
 		container.setBorder(BorderFactory.createEmptyBorder(4, 4, 8, 4));
 		searchTextField = new JTextField();
+		searchTextField.setCaret(new DefaultCaret());
 		searchTextField.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				/* Valitaan taulukosta seuraava rivi, kun hakukentässä

@@ -30,6 +30,7 @@ import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.text.DefaultCaret;
 
 import kirjanpito.db.DataAccessException;
 import kirjanpito.models.StatisticsModel;
@@ -102,7 +103,9 @@ public class BalanceComparisonDialog extends JDialog {
 		container.add(panel, BorderLayout.NORTH);
 		
 		startDateTextField = new DateTextField();
+		startDateTextField.setCaret(new DefaultCaret());
 		endDateTextField = new DateTextField();
+		endDateTextField.setCaret(new DefaultCaret());
 		
 		JLabel label = new JLabel("Alkaa");
 		label.setDisplayedMnemonic('A');

@@ -19,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellEditor;
+import javax.swing.text.DefaultCaret;
 
 /**
  * <code>TableCellEditor</code>in toteuttava luokka, jolla
@@ -45,6 +46,7 @@ public class CurrencyCellEditor extends AbstractCellEditor
 		formatter.setParseBigDecimal(true);
 		decimalSeparator = DecimalFormatSymbols.getInstance().getDecimalSeparator();
 		textField = new JTextField();
+		textField.setCaret(new DefaultCaret());
 		textField.setBorder(new LineBorder(Color.BLACK));
 		textField.addKeyListener(new KeyAdapter() {
 			@Override

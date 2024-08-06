@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellEditor;
+import javax.swing.text.DefaultCaret;
 
 import kirjanpito.models.DocumentModel;
 
@@ -26,6 +27,7 @@ public class DescriptionCellEditor extends AbstractCellEditor
 	
 	public DescriptionCellEditor(DocumentModel documentModel) {
 		textField = new JTextField();
+		textField.setCaret(new DefaultCaret());
 		textField.setBorder(new LineBorder(Color.BLACK));
 		textField.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {

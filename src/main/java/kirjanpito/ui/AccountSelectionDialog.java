@@ -39,6 +39,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
+import javax.swing.text.DefaultCaret;
 
 import kirjanpito.db.Account;
 import kirjanpito.models.COATableModel;
@@ -65,7 +66,6 @@ public class AccountSelectionDialog extends JDialog {
 	private COATableCellRenderer cellRenderer;
 	private COATableModel tableModel;
 	private String searchPhrase;
-	private boolean firstFocus;
 
 	private static final long serialVersionUID = 1L;
 
@@ -130,7 +130,6 @@ public class AccountSelectionDialog extends JDialog {
 	 * @param q hakusana
 	 */
 	public void setSearchPhrase(String q) {
-		firstFocus = true;
 		searchPhrase = q;
 		searchTextField.setText(q);
 		searchTextField.requestFocusInWindow();
@@ -209,25 +208,7 @@ public class AccountSelectionDialog extends JDialog {
 			}
 		});
 
-		searchTextField.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				if (firstFocus) {
-					/* Kun Mac L&F on käytössä, tekstikentän sisältö maalataan automaattisesti
-					 * kun kohdistus siirtyy tekstikenttään. Poistetaan maalaus, jotta sisältöä ei korvata,
-					 * kun käyttäjä jatkaa hakusanan kirjoittamista.*/
-
-					SwingUtilities.invokeLater(new Runnable() {
-						public void run() {
-							searchTextField.setCaretPosition(searchTextField.getText().length());
-						}
-					});
-
-					firstFocus = false;
-				}
-			}
-		});
-
+		searchTextField.setCaret(new DefaultCaret());
 		searchTextField.getDocument().addDocumentListener(
 				searchTextFieldListener);
 		JLabel label = new JLabel("Haku");

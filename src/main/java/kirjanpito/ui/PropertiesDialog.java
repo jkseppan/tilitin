@@ -24,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableColumn;
+import javax.swing.text.DefaultCaret;
 
 import kirjanpito.db.DataAccessException;
 import kirjanpito.db.Period;
@@ -89,6 +90,7 @@ public class PropertiesDialog extends JDialog {
 		panel.add(new JLabel("Nimi"), c);
 		
 		nameTextField = new JTextField();
+		nameTextField.setCaret(new DefaultCaret());
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0;
 		c.insets = new Insets(0, 10, 5, 0);
@@ -101,6 +103,7 @@ public class PropertiesDialog extends JDialog {
 		panel.add(new JLabel("Y-tunnus"), c);
 		
 		businessIdTextField = new JTextField();
+		businessIdTextField.setCaret(new DefaultCaret());
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;

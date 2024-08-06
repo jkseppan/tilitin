@@ -20,6 +20,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
+import javax.swing.text.DefaultCaret;
 
 import kirjanpito.db.Account;
 import kirjanpito.util.ChartOfAccounts;
@@ -44,6 +45,7 @@ public class AccountCellEditor extends AbstractCellEditor
 	public AccountCellEditor(Registry registry, TableModel tableModel, ActionListener listener)
 	{
 		this.textField = new AccountTextField();
+		this.textField.setCaret(new DefaultCaret());
 		this.textField.getDocument().addDocumentListener(documentListener);
 		this.textField.addKeyListener(keyListener);
 		this.textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));

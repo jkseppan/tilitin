@@ -23,6 +23,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.DefaultCaret;
 
 /**
  * Tietokanta-asetuksien muokkausikkuna.
@@ -156,6 +157,7 @@ public class DatabaseSettingsDialog extends JDialog {
 		add(panel, BorderLayout.CENTER);
 		
 		urlTextField = new JTextField();
+		urlTextField.setCaret(new DefaultCaret());
 		urlTextField.getDocument().addDocumentListener(new DocumentListener() {
 			public void removeUpdate(DocumentEvent e) {
 				updateOpenButtonEnabled();
@@ -171,7 +173,9 @@ public class DatabaseSettingsDialog extends JDialog {
 		});
 		
 		usernameTextField = new JTextField();
+		usernameTextField.setCaret(new DefaultCaret());
 		passwordTextField = new JPasswordField();
+		passwordTextField.setCaret(new DefaultCaret());
 		
 		addComponent(panel, 0, "URL", urlTextField);
 		addComponent(panel, 1, "Käyttäjänimi", usernameTextField);

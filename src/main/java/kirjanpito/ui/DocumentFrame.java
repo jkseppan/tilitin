@@ -76,6 +76,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.text.DefaultCaret;
 
 import kirjanpito.db.Account;
 import kirjanpito.db.DataAccessException;
@@ -595,6 +596,7 @@ public class DocumentFrame extends JFrame implements AccountSelectionListener {
 		left.add(numberLabel, c);
 
 		numberTextField = new TextFieldWithLockIcon();
+		numberTextField.setCaret(new DefaultCaret());
 		numberTextField.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
 				if (numberTextField.isEditable()) {
@@ -637,6 +639,7 @@ public class DocumentFrame extends JFrame implements AccountSelectionListener {
 		right.add(dateLabel, c);
 
 		dateTextField = new DateTextField();
+		dateTextField.setCaret(new DefaultCaret());
 		dateTextField.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
 				if (dateTextField.isEditable() && Character.isDigit(e.getKeyChar())) {
@@ -894,6 +897,7 @@ public class DocumentFrame extends JFrame implements AccountSelectionListener {
 		container.add(panel);
 
 		JTextField textField = searchPhraseTextField = new JTextField();
+		textField.setCaret(new DefaultCaret());
 		textField.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {

@@ -61,6 +61,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
+import javax.swing.text.DefaultCaret;
 
 import kirjanpito.db.Account;
 import kirjanpito.db.COAHeading;
@@ -309,6 +310,7 @@ public class COADialog extends JDialog {
 		topPanel.setLayout(layout);
 		topPanel.setBorder(BorderFactory.createEmptyBorder(0, 4, 8, 4));
 		searchTextField = new JTextField();
+		searchTextField.setCaret(new DefaultCaret());
 		searchTextField.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				/* Valitaan taulukosta seuraava rivi, kun hakukentässä

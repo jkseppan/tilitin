@@ -29,6 +29,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.text.DefaultCaret;
 
 import kirjanpito.db.DataAccessException;
 import kirjanpito.db.DataSource;
@@ -321,6 +322,7 @@ public class FinancialStatementOptionsDialog extends JDialog {
 				c.gridy = 1;
 				final int fieldIndex = i;
 				startDateFields[i] = new DateTextField();
+				startDateFields[i].setCaret(new DefaultCaret());
 				startDateFields[i].setColumns(10);
 				startDateFields[i].addFocusListener(new FocusAdapter() {
 					@Override
@@ -353,6 +355,7 @@ public class FinancialStatementOptionsDialog extends JDialog {
 
 			c.gridy = 2;
 			endDateFields[i] = new DateTextField();
+			endDateFields[i].setCaret(new DefaultCaret());
 			endDateFields[i].setColumns(10);
 			endDateSpinners[i] = new JSpinner(new SpinnerDateModel(endDateFields[i]));
 			endDateSpinners[i].setEditor(endDateFields[i]);
