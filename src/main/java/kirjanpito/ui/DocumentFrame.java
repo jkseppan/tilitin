@@ -2492,8 +2492,6 @@ public class DocumentFrame extends JFrame implements AccountSelectionListener {
 		DataSourceInitializationModel initModel =
 			new DataSourceInitializationModel();
 
-		initModel.update();
-
 		DataSourceInitializationDialog dialog =
 			new DataSourceInitializationDialog(this,
 					registry, initModel);

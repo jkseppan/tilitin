@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,7 +23,7 @@ public class DataSourceInitializationDialog extends JDialog {
 	private DataSourceInitializationModel model;
 	private DataSourceInitializationWorker worker;
 	private Registry registry;
-	private JComboBox comboBox;
+	private JComboBox<String> comboBox;
 	
 	private static final long serialVersionUID = 1L; 
 	
@@ -42,13 +43,10 @@ public class DataSourceInitializationDialog extends JDialog {
 		setLayout(new GridBagLayout());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
-		String[] comboBoxItems = new String[model.getFileCount()];
+		String[] comboBoxItems = model.getModelNames();
+		Arrays.sort(comboBoxItems);
 		
-		for (int i = 0; i < comboBoxItems.length; i++) {
-			comboBoxItems[i] = model.getName(i);
-		}
-		
-		comboBox = new JComboBox(comboBoxItems);
+		comboBox = new JComboBox<String>(comboBoxItems);
 		JLabel label = new JLabel("Tilikarttamalli");
 		label.setLabelFor(comboBox);
 		c.insets = new Insets(10, 10, 10, 5);
@@ -101,10 +99,10 @@ public class DataSourceInitializationDialog extends JDialog {
 	}
 	
 	public void createWorker() {
-		int index = comboBox.getSelectedIndex();
+		String modelName = (String) comboBox.getSelectedItem();
 		
 		worker = new DataSourceInitializationWorker(
-					registry.getDataSource(), model.getFile(index));
+					registry.getDataSource(), model, modelName);
 		
 		dispose();
 		
