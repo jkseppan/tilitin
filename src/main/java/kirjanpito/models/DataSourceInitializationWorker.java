@@ -3,12 +3,15 @@ package kirjanpito.models;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.jar.JarFile;
+import java.util.logging.Logger;
 
 import javax.swing.SwingWorker;
 
@@ -23,6 +26,7 @@ import kirjanpito.db.Period;
 import kirjanpito.db.ReportStructure;
 import kirjanpito.db.Session;
 import kirjanpito.db.Settings;
+import kirjanpito.ui.Kirjanpito;
 
 /**
  * <code>SwingWorker</code>, joka lisää tyhjään tietokantaan
@@ -31,15 +35,17 @@ import kirjanpito.db.Settings;
 public class DataSourceInitializationWorker extends SwingWorker<Void, Void> {
 	private DataSource dataSource;
 	private Session sess;
-	private File archiveFile;
-	private JarFile jar;
+	private DataSourceInitializationModel initModel;
+	private String modelName;
 	private boolean initialized;
 
 	public DataSourceInitializationWorker(DataSource dataSource,
-			File archiveFile) {
+			DataSourceInitializationModel initModel,
+			String modelName) {
 
 		this.dataSource = dataSource;
-		this.archiveFile = archiveFile;
+		this.initModel = initModel;
+		this.modelName = modelName;
 	}
 
 	/**
@@ -54,7 +60,6 @@ public class DataSourceInitializationWorker extends SwingWorker<Void, Void> {
 	protected Void doInBackground() throws Exception {
 		try {
 			sess = dataSource.openSession();
-			jar = new JarFile(archiveFile);
 			init();
 			createCOA();
 			copyReportStructure("balance-sheet");
@@ -117,7 +122,7 @@ public class DataSourceInitializationWorker extends SwingWorker<Void, Void> {
 	private void createCOA() throws IOException, DataAccessException {
 		/* Luodaan tilikartta. */
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
-						jar.getInputStream(jar.getEntry("chart-of-accounts.txt")),
+						this.initModel.getModelFileAsStream(this.modelName, "chart-of-accounts.txt"),
 						Charset.forName("UTF-8")));
 
 		String line;
@@ -223,21 +228,12 @@ public class DataSourceInitializationWorker extends SwingWorker<Void, Void> {
 
 	private void copyReportStructure(String name) throws IOException, DataAccessException {
 		String filename = name + ".txt";
-
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				jar.getInputStream(jar.getEntry(filename)),
-				Charset.forName("UTF-8")));
-
-		StringBuilder sb = new StringBuilder();
-		String line;
-
-		while ((line = reader.readLine()) != null) {
-			sb.append(line).append('\n');
-		}
+		InputStream is = initModel.getModelFileAsStream(this.modelName, filename);
+		String data = new String(is.readAllBytes(), StandardCharsets.UTF_8);
 
 		ReportStructure s = new ReportStructure();
 		s.setId(name);
-		s.setData(sb.toString());
+		s.setData(data);
 		dataSource.getReportStructureDAO(sess).save(s);
 	}
 }

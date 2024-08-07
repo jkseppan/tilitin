@@ -1,111 +1,91 @@
 package kirjanpito.models;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.JarURLConnection;
+import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.jar.Attributes;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 import java.util.jar.JarFile;
-import java.util.jar.Manifest;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
 
 import kirjanpito.ui.Kirjanpito;
-import kirjanpito.util.AppSettings;
 
 public class DataSourceInitializationModel {
-	private File archiveDir;
-	private ArrayList<File> files;
-	private ArrayList<String> names;
+	private static final String MODELS_PATH = "tilikarttamallit/";
 	private Logger logger = Logger.getLogger(Kirjanpito.LOGGER_NAME);
+	private Map<String, String> modelNameToDir;
 
 	public DataSourceInitializationModel() {
-		/* Tilikarttamallitiedostot ovat tilikarttamallit-nimisessä
-		 * hakemistossa, joka sijaitsee samassa hakemistossa kuin
-		 * ohjelman JAR-tiedosto. */
-		File jarFile;
-		
-		try {
-			jarFile = new File(DataSourceInitializationModel.class.
-			getProtectionDomain().getCodeSource().getLocation().toURI());
-		}
-		catch (URISyntaxException e) {
-			e.printStackTrace();
-			return;
-		}
-		
-		archiveDir = new File(jarFile.getParentFile(), "tilikarttamallit");
+		modelNameToDir = new HashMap<>();
 	}
-	
+
 	public void update() {
-		files = new ArrayList<File>();
-		names = new ArrayList<String>();
-		
-		readDir(archiveDir);
-		
-		/* Etsitään tiedostoja myös käyttäjän asetushakemistosta. */
-		AppSettings settings = AppSettings.getInstance();
-		readDir(new File(settings.getDirectoryPath()));
-	}
-	
-	private void readDir(File dir) {
-		if (!dir.isDirectory()) return;
-		File[] jarFiles = dir.listFiles(filter);
-		Arrays.sort(jarFiles);
-		
-		for (File file : jarFiles) {
-			try {
-				JarFile jar = new JarFile(file);
-				Manifest manifest = jar.getManifest();
-				
-				if (manifest == null) {
-					logger.log(Level.WARNING, "Tiedosto " + file.getName() +
-							" ei sisällä MANIFEST.MF-tiedostoa");
-					jar.close();
-					continue;
+		modelNameToDir.clear();
+		try {
+			URI uri = getClass().getResource("/" + MODELS_PATH).toURI();
+			if (uri.getScheme().equals("jar")) {
+				JarURLConnection jarURLConnection = (JarURLConnection) uri.toURL().openConnection();
+				try (JarFile jar = jarURLConnection.getJarFile()) {
+					jar.stream()
+							.filter(entry -> entry.getName().startsWith(MODELS_PATH)
+									&& entry.getName().endsWith("/model.properties"))
+							.forEach(entry -> processModelProperties(entry.getName()));
 				}
 				
-				Attributes attr = manifest.getMainAttributes();
-				String name = attr.getValue("Name");
-				jar.close();
-				
-				if (name == null) {
-					logger.log(Level.WARNING, "Tiedosto " + file.getName() +
-						" ei sisällä Name-attribuuttia");
-					continue;
+			} else {
+				Path path = Paths.get(uri);
+				try (Stream<Path> stream = Files.list(path)) {
+					stream.filter(Files::isDirectory)
+							.forEach(dir -> processModelProperties(
+									"/" + MODELS_PATH + "/" + dir.getFileName().toString() + "/model.properties"));
 				}
-				
-				files.add(file);
-				names.add(name);
 			}
-			catch (IOException e) {
-				logger.log(Level.WARNING,
-						"JAR-tiedoston lukeminen epäonnistui", e);
-			}
+		} catch (URISyntaxException | IOException e) {
+			logger.log(Level.WARNING, "Tilikarttamallien hakeminen epäonnistui", e);
 		}
 	}
-	
-	public File getArchiveDirectory() {
-		return archiveDir;
-	}
-	
-	public int getFileCount() {
-		return files.size();
-	}
-	
-	public File getFile(int index) {
-		return files.get(index);
-	}
-	
-	public String getName(int index) {
-		return names.get(index);
-	}
-	
-	private FilenameFilter filter = new FilenameFilter() {
-		public boolean accept(File dir, String name) {
-			return name.endsWith(".jar");
+
+	private void processModelProperties(String resourcePath) {
+		String path = resourcePath.startsWith("/") ? resourcePath : "/" + resourcePath;
+		try (InputStream input = getClass().getResourceAsStream(path)) {
+			if (input == null) {
+				throw new IOException("Resource not found: " + path);
+			}
+			Properties props = new Properties();
+			props.load(input);
+			String name = props.getProperty("name");
+			if (name == null) {
+				throw new IOException("Tilikarttamallin " + path + " nimi puuttuu");
+			}
+			modelNameToDir.put(name, path.substring(0, path.lastIndexOf("/")));
+		} catch (IOException e) {
+			logger.log(Level.WARNING, "Tilikarttamallin " + path + " lukeminen epäonnistui", e);
 		}
-	};
+	}
+
+	public int getModelCount() {
+		return modelNameToDir.size();
+	}
+
+	public String[] getModelNames() {
+		return modelNameToDir.keySet().toArray(new String[0]);
+	}
+
+	public InputStream getModelFileAsStream(String modelName, String fileName) {
+		InputStream result = getClass().getResourceAsStream(modelNameToDir.get(modelName) + "/" + fileName);
+		if (result == null) {
+			throw new IllegalArgumentException("Tilikarttamallia ei löydy: " + modelName + " -> "
+					+ modelNameToDir.get(modelName) + "/" + fileName);
+		}
+		return result;
+	}
 }
