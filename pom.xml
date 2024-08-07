@@ -5,7 +5,7 @@
 
     <groupId>com.example</groupId>
     <artifactId>tilitin</artifactId>
-    <version>1.5.0-SNAPSHOT</version>
+    <version>1.5.0-jkseppan.1</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -70,6 +70,7 @@
                 <configuration>
                     <archive>
                         <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             <mainClass>kirjanpito.ui.Kirjanpito</mainClass>
                         </manifest>
                     </archive>
