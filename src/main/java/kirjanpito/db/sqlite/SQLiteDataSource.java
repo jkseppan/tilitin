@@ -132,7 +132,7 @@ public class SQLiteDataSource implements DataSource {
 
 		try {
 			DatabaseUpgradeUtil.executeQueries(conn,
-					SQLiteDataSource.class.getResourceAsStream("database.sql"));
+					SQLiteDataSource.class.getResourceAsStream("/schema/sqlite.sql"));
 		}
 		catch (SQLException e) {
 			throw new DataAccessException(e.getMessage(), e);
