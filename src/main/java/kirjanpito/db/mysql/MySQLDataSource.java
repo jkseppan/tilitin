@@ -107,7 +107,7 @@ public class MySQLDataSource implements DataSource {
 
 		try {
 			DatabaseUpgradeUtil.executeQueries(conn,
-					MySQLDataSource.class.getResourceAsStream("database.sql"));
+					MySQLDataSource.class.getResourceAsStream("/schema/mysql.sql"));
 		}
 		catch (SQLException e) {
 			throw new DataAccessException(e.getMessage(), e);

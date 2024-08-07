@@ -106,7 +106,7 @@ public class PSQLDataSource implements DataSource {
 
 		try {
 			DatabaseUpgradeUtil.executeQueries(conn,
-					PSQLDataSource.class.getResourceAsStream("database.sql"));
+					PSQLDataSource.class.getResourceAsStream("/schema/postgresql.sql"));
 		}
 		catch (SQLException e) {
 			throw new DataAccessException(e.getMessage(), e);
