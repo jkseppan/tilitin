@@ -8,8 +8,12 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.jar.JarFile;
 import java.util.logging.Logger;
 
@@ -145,6 +149,9 @@ public class DataSourceInitializationWorker extends SwingWorker<Void, Void> {
 			new BigDecimal("13"),
 			new BigDecimal("23")
 		};
+		DecimalFormat df = new DecimalFormat();
+		df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.of("fi", "FI")));
+		df.setParseBigDecimal(true);
 
 		line = reader.readLine();
 		count = Integer.parseInt(line);
@@ -184,8 +191,14 @@ public class DataSourceInitializationWorker extends SwingWorker<Void, Void> {
 				account.setVatCode(Integer.parseInt(fields[2]));
 
 				if (fields[3].endsWith("%")) {
-					account.setVatRate(new BigDecimal(
-							fields[3].substring(0, fields[3].length() - 1)));
+					final String vatRateString = fields[3].substring(0, fields[3].length() - 1);
+					try {
+						BigDecimal vatRate = (BigDecimal) df.parse(vatRateString);
+						account.setVatRate(vatRate);
+					}
+					catch (ParseException e) {
+						throw new IllegalArgumentException("Virhe ALV-prosentin tiedoissa: " + vatRateString);
+					}
 				}
 				else {
 					account.setVatRate(vatRateMapping[Integer.parseInt(fields[3])]);
