@@ -1,7 +1,7 @@
 # Tilitin
 
 Tilitin on ilmainen kirjanpito-ohjelma. Ohjelman teki Tommi Helineva, ja sen dokumentaatio on hänen
-sivuillaan: https://helineva.net/tilitin/
+sivuillaan: <https://helineva.net/tilitin/>
 
 Ohjelmaan on vuonna 2024 tehnyt pieniä ajanmukaistuksia ja korjauksia Jouni Seppänen.
 
@@ -12,7 +12,7 @@ Ohjelmaan on vuonna 2024 tehnyt pieniä ajanmukaistuksia ja korjauksia Jouni Sep
    [Adoptiumin](https://adoptium.net/) jakelut ovat hyviä. (Oraclen Javaa en suosittele, koska
    vaikka uusia versioita saakin ilmaiseksi, sillä on ollut kummallisia lisenssitemppuja
    menneisyydessä.)
-2. Lataa jar-tiedosto GitHubista ja kopioi sopivaan hakemistoon.
+2. Lataa jar-tiedosto GitHubin [releases-osiosta][releases] ja kopioi sopivaan hakemistoon.
 3. Tuplaklikkaa jar-tiedostoa. Jos sinulla on Mac, tämä johtaa luultavasti valitukseen
    epäilyttävästä ohjelmistosta. Jos uskallat käyttää sitä, voit ohittaa valituksen klikkaamalla
    jar-tiedostoa hiiren oikealla painikkeella (ohjauslevyllä käytä kahta sormea, tai paina
@@ -38,3 +38,8 @@ Katso GPL-lisenssistä lisää yksityiskohtia.
 
 Tämän ohjelman mukana pitäisi tulla kopio GPL-lisenssistä tiedostossa COPYING. Jos näin ei ole,
 katso <http://www.gnu.org/licenses/>.
+
+Tilittimen lähdekoodin voit kloonata GitHubista tai ladata [releases-osiosta][releases],
+jossa ovat myös kirjastojen lähdekoodit.
+
+[releases]: https://github.com/jkseppan/tilitin/releases
