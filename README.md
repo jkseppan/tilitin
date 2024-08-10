@@ -26,6 +26,8 @@ Ohjelmaan on vuonna 2024 tehnyt pieniä ajanmukaistuksia ja korjauksia Jouni Sep
   hakemistoon.
 - Uusi tilikartta alv-prosentilla 25,5%
 - Pieniä teknisiä ajanmukaistuksia
+- Käytetyt kirjastot on päivitetty ja niiden lisenssiehdot luetellaan ikkunassa
+  "Tietoja ohjelmasta Tilitin".
 
 ## Lisenssi
 
@@ -39,6 +41,7 @@ Katso GPL-lisenssistä lisää yksityiskohtia.
 Tämän ohjelman mukana pitäisi tulla kopio GPL-lisenssistä tiedostossa COPYING. Jos näin ei ole,
 katso <http://www.gnu.org/licenses/>.
 
+Komponenttien lisenssit ja niihin sisältyvät ehdot ovat tiedostossa LISENSSIT.html.
 Tilittimen lähdekoodin voit kloonata GitHubista tai ladata [releases-osiosta][releases],
 jossa ovat myös kirjastojen lähdekoodit.
 
