@@ -51,6 +51,13 @@
             <resource>
                 <directory>src/main/resources</directory>
             </resource>
+            <resource>
+                <directory>${project.basedir}</directory>
+                <includes>
+                    <include>LISENSSIT.html</include>
+                </includes>
+                <targetPath>.</targetPath>
+            </resource>
         </resources>
         <plugins>
             <plugin>
@@ -93,7 +100,6 @@
                                 </transformer>
                             </transformers>
                         </configuration>
-    
                     </execution>
                 </executions>
             </plugin>

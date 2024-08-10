@@ -221,6 +221,7 @@ public class DocumentFrame extends JFrame implements AccountSelectionListener {
 		images.add(Resources.loadAsImage("tilitin-48x48.png"));
 		setIconImages(images);
 
+		Desktop.getDesktop().setAboutHandler(e -> showAboutDialog());
 		createMenuBar();
 		createToolBar();
 		createStatusBar();
@@ -519,8 +520,10 @@ public class DocumentFrame extends JFrame implements AccountSelectionListener {
 		menu.add(SwingUtils.createMenuItem("Virheenjäljitystietoja", null, 'V',
 				null, debugListener));
 
-		menu.add(SwingUtils.createMenuItem("Tietoja ohjelmasta", null, 'T',
-				null, aboutListener));
+		if (!System.getProperty("os.name").toLowerCase().startsWith("mac os x")) {
+			menu.add(SwingUtils.createMenuItem("Tietoja ohjelmasta", null, 'T',
+					null, aboutListener));
+		}
 
 		setJMenuBar(menuBar);
 	}

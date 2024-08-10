@@ -64,33 +64,20 @@ public class AboutDialog extends JDialog {
 
 		JTextPane textPane = new JTextPane();
 		textPane.setContentType("text/html");
-		textPane.setText(
-				"""
-							<html>
-							<body style='width: 300px; word-wrap: break-word;'>
-							<p>© 2009–2013 Tommi Helineva<br>
-							© 2024 Jouni Seppänen</p>
-							<p>Tämä on vapaa ohjelma: tätä ohjelmaa saa levittää edelleen ja muuttaa
-							Free Software Foundationin julkaiseman GNU General Public Licensen
-							(GPL-lisenssi) version 3 ehtojen mukaisesti.</p>
-							<p>Tätä ohjelmaa levitetään siinä toivossa, että se olisi hyödyllinen
-							mutta ilman mitään takuuta; edes hiljaista takuuta kaupallisesti hyväksyttävästä
-							laadusta tai soveltuvuudesta tiettyyn tarkoitukseen. Katso GPL-lisenssistä
-							lisää yksityiskohtia.</p>
-							<p>Tämän ohjelman mukana pitäisi tulla kopio GPL-lisenssistä tiedostossa
-							COPYING. Jos näin ei ole, katso<br>
-							http://www.gnu.org/licenses/.</p>
-							</body>
-							</html>
-						""");
+		try {
+			textPane.setText(Resources.loadAsString("LISENSSIT.html"));
+		} catch (Exception e) {
+			textPane.setText("tiedostoa LISENSSIT.html ei löytynyt");
+		}
 		textPane.setEditable(false);
 		textPane.setBorder(null);
+		textPane.setCaretPosition(0);
 
 		JScrollPane scrollPane = new JScrollPane(textPane);
 		scrollPane.setPreferredSize(new Dimension(400, 380));
 		scrollPane.setBorder(null);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
 		c.gridy = 3;
 		c.fill = GridBagConstraints.BOTH;
