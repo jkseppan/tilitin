@@ -154,7 +154,7 @@ public abstract class Print implements DrawCommandVarProvider {
 		try {
 			if (header.isEmpty()) {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(
-						Print.class.getResourceAsStream(String.format("header-%s.txt", printId)),
+						Print.class.getResourceAsStream(String.format("/reports/header-%s.txt", printId)),
 						Charset.forName("UTF-8")));
 
 				headerParser.parse(reader);
